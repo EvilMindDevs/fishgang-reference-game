@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +45,6 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
             playerScript.TakeDamage();
-            //playerScript.raiseScore();
         }
 
         if (hitObject.tag == "Wall")

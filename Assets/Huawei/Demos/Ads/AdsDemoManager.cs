@@ -4,84 +4,55 @@ using System;
 using UnityEngine;
 using HuaweiMobileServices.Ads;
 using HmsPlugin;
+using UnityEngine.UI;
 
 public class AdsDemoManager : MonoBehaviour
 {
+    [SerializeField]
+    private Toggle testAdStatusToggle;
 
-    private const string REWARD_AD_ID = "testx9dtjwj8hp";
-    private const string INTERSTITIAL_AD_ID = "testb4znbuh3n2";
-    private const string BANNER_AD_ID = "testw6vs28auh3";
-
-    private RewardAdManager rewardAdManager;
-    private InterstitialAdManager interstitialAdManager;
-    private BannerAdsManager bannerAdsManager;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        InitBannerAds();
-        InitRewardedAds();
-        InitInterstitialAds();
-    }
-
-    // Banner Ad
-    private void InitBannerAds()
-    {
-        bannerAdsManager = BannerAdsManager.GetInstance();
-        bannerAdsManager.AdId = BANNER_AD_ID;
+        HMSAdsKitManager.Instance.OnRewarded = OnRewarded;
+        HMSAdsKitManager.Instance.OnInterstitialAdClosed = OnInterstitialAdClosed;
     }
 
     public void ShowBannerAd()
     {
-        bannerAdsManager.ShowBannerAd();
+        HMSAdsKitManager.Instance.ShowBannerAd();
     }
 
     public void HideBannerAd()
     {
-        bannerAdsManager.HideBannerAd();
-    }
-
-    // Rewarded Ad
-
-    private void InitRewardedAds()
-    {
-        rewardAdManager = RewardAdManager.GetInstance();
-        rewardAdManager.AdId = REWARD_AD_ID;
-        rewardAdManager.OnRewarded = OnRewarded;
+        HMSAdsKitManager.Instance.HideBannerAd();
     }
 
     public void ShowRewardedAd()
     {
         Debug.Log("[HMS] AdsDemoManager ShowRewardedAd");
-        rewardAdManager.ShowRewardedAd();
+        HMSAdsKitManager.Instance.ShowRewardedAd();
     }
 
+    public void ShowInterstitialAd()
+    {
+        Debug.Log("[HMS] AdsDemoManager ShowInterstitialAd");
+        HMSAdsKitManager.Instance.ShowInterstitialAd();
+    }
 
     public void OnRewarded(Reward reward)
     {
         Debug.Log("[HMS] AdsDemoManager rewarded!");
     }
 
-
-    // Interstitial Ad
-
-    private void InitInterstitialAds()
-    {
-        interstitialAdManager = InterstitialAdManager.GetInstance();
-        interstitialAdManager.AdId = INTERSTITIAL_AD_ID;
-        interstitialAdManager.OnAdClosed = OnInterstitialAdClosed;
-    }
-
-
-    public void ShowInterstitialAd()
-    {
-        Debug.Log("[HMS] AdsDemoManager ShowInterstitialAd");
-        interstitialAdManager.ShowInterstitialAd();
-    }
-
-
     public void OnInterstitialAdClosed()
     {
         Debug.Log("[HMS] AdsDemoManager interstitial ad closed");
+    }
+
+    public void SetTestAdStatus()
+    {
+        HMSAdsKitManager.Instance.SetTestAdStatus(testAdStatusToggle.isOn);
+        HMSAdsKitManager.Instance.DestroyBannerAd();
+        HMSAdsKitManager.Instance.LoadAllAds();
     }
 }

@@ -8,33 +8,25 @@ using UnityEngine.UI;
 
 public class RemoteConfigDemo : MonoBehaviour
 {
-    private RemoteConfigManager remoteConfigManager;
-    string TAG = "RemoteConfigManager";
-
-    void Awake()
-    {
-        remoteConfigManager = new RemoteConfigManager();
-        remoteConfigManager.GetInstance();
-    }
+    private Text countOfVariables;
+    string TAG = "RemoteConfig Demo";
 
     void Start()
     {
-        Fetch();
+        countOfVariables = GameObject.Find("countOfVariables").GetComponent<Text>();
     }
 
     public void Fetch()
     {
-        remoteConfigManager.OnFecthSuccess = OnFecthSuccess;
-        remoteConfigManager.OnFecthFailure = OnFecthFailure;
-        remoteConfigManager.Fetch();
+        HMSRemoteConfigManager.Instance.OnFecthSuccess = OnFecthSuccess;
+        HMSRemoteConfigManager.Instance.OnFecthFailure = OnFecthFailure;
+        HMSRemoteConfigManager.Instance.Fetch();
     }
 
     private void OnFecthSuccess(ConfigValues config)
     {
-        remoteConfigManager.Apply(config);
+        HMSRemoteConfigManager.Instance.Apply(config);
         Debug.Log($"[{TAG}]: fetch() Success");
-        GetMergedAll();
-
     }
 
     private void OnFecthFailure(HMSException exception)
@@ -44,16 +36,13 @@ public class RemoteConfigDemo : MonoBehaviour
 
     public void GetMergedAll()
     {
-        Dictionary<string, object> dictionary = remoteConfigManager.GetMergedAll();
-        foreach(var el in dictionary)
-        {
-            Debug.Log($"{TAG} = {el.Key} / {el.Value}");
-        }
+        Dictionary<string, object> dictionary = HMSRemoteConfigManager.Instance.GetMergedAll();
+        countOfVariables.text = $"Count of Variables : {dictionary.Count}";
     }
 
     public void ClearAll()
     {
-        remoteConfigManager.ClearAll();
+        HMSRemoteConfigManager.Instance.ClearAll();
         GetMergedAll();
     }
 
@@ -63,29 +52,29 @@ public class RemoteConfigDemo : MonoBehaviour
         dictionary.Add("Key", "Value");
         dictionary.Add("Key1", true);
         dictionary.Add("Key2", 5);
-        dictionary.Add("Key3", 1.8); 
-        remoteConfigManager.ApplyDefault(dictionary);
+        dictionary.Add("Key3", 1.8);
+        HMSRemoteConfigManager.Instance.ApplyDefault(dictionary);
         GetMergedAll();
     }
 
     public void ApplyDefaultXml()
     {
-        remoteConfigManager.ApplyDefault("xml/remoteConfig");
+        HMSRemoteConfigManager.Instance.ApplyDefault("xml/remoteConfig");
         GetMergedAll();
     }
 
     public void LoadLastFetched()
     {
-        Debug.Log($"[{TAG}]: LoadLastFetched {remoteConfigManager.LoadLastFetched().getValueAsString("abc")}");
+        Debug.Log($"[{TAG}]: LoadLastFetched {HMSRemoteConfigManager.Instance.LoadLastFetched().getValueAsString("abc")}");
     }
 
     public void DeveloperMode(bool val)
     {
-        remoteConfigManager.SetDeveloperMode(val);
+        HMSRemoteConfigManager.Instance.SetDeveloperMode(val);
     }
 
     public void GetSource()
     {
-        Debug.Log($"[{TAG}]: GetSource(Key) {remoteConfigManager.GetSource("Key")}");
+        Debug.Log($"[{TAG}]: GetSource(Key) {HMSRemoteConfigManager.Instance.GetSource("Key")}");
     }
 }

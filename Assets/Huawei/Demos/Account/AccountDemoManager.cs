@@ -3,44 +3,47 @@ using HuaweiMobileServices.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 using HmsPlugin;
+
 public class AccountDemoManager : MonoBehaviour
 {
-
     private const string NOT_LOGGED_IN = "No user logged in";
     private const string LOGGED_IN = "{0} is logged in";
     private const string LOGIN_ERROR = "Error or cancelled login";
 
-    private AccountManager accountManager;
-
-    void Awake()
-    {
-        accountManager = AccountManager.GetInstance();
-        accountManager.OnSignInSuccess = OnLoginSuccess;
-        accountManager.OnSignInFailed = OnLoginFailure;
-    }
+    [SerializeField]
+    private Text loggedInUser;
 
     void Start()
     {
-        LogIn();
+        loggedInUser.text = NOT_LOGGED_IN;
+
+        HMSAccountManager.Instance.OnSignInSuccess = OnLoginSuccess;
+        HMSAccountManager.Instance.OnSignInFailed = OnLoginFailure;
     }
 
     public void LogIn()
     {
-        accountManager.SignIn();
+        HMSAccountManager.Instance.SignIn();
+    }
+
+    public void SilentSignIn()
+    {
+        HMSAccountManager.Instance.SilentSignIn();
     }
 
     public void LogOut()
     {
-        accountManager.SignOut();
+        HMSAccountManager.Instance.SignOut();
+        loggedInUser.text = NOT_LOGGED_IN;
     }
 
-    public void OnLoginSuccess(AuthHuaweiId authHuaweiId)
+    public void OnLoginSuccess(AuthAccount authHuaweiId)
     {
-        Debug.Log("[HMS]: RESULT AUTHSERVICE => " + authHuaweiId.DisplayName);
+        loggedInUser.text = string.Format(LOGGED_IN, authHuaweiId.DisplayName);
     }
 
     public void OnLoginFailure(HMSException error)
     {
-        Debug.Log("[HMS]: RESULT AUTHSERVICE => " + LOGIN_ERROR);
+        loggedInUser.text = LOGIN_ERROR;
     }
 }

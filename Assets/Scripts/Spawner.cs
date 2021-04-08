@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +20,6 @@ public class Spawner : MonoBehaviour
         {
             if (timeBtwSpawns <= 0)
             {
-                //spawn enemy
                 Transform randowmSpawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
                 GameObject randomEnemy = enemies[UnityEngine.Random.Range(0, enemies.Length)];
 

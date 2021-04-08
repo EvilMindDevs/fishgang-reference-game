@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +15,7 @@ public class Fish : MonoBehaviour
     {
         speed = UnityEngine.Random.Range(minSpeed, maxSpeed);
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        
+
         if (transform.position.x < 1 && transform.position.x > -1.5 && transform.position.y < 0)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);

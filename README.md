@@ -13,7 +13,7 @@ Hms Kits
 * Game Service
 
 ## References
-HMS Unity Plugin  https://github.com/EvilMindDevs/hms-unity-plugin
+HMS Unity Plugin  https://github.com/EvilMindDevs/hms-unity-plugin/releases/tag/v2.0
 
 ## License
 MIT
