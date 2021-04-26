@@ -19,15 +19,15 @@ MonoBehaviour:
     - IAPKitEnabled
     - GameServiceEnabled
     - AnalyticsKit
+    - Auth
+    - AccountKit
     - AdsKit
-    - RemoteConfig
     - GameService
     - PushKit
     - IAPKit
-    - AccountKit
+    - RemoteConfig
     - CrashKit
     - CloudDB
-    - Auth
     - DriveKit
     - NearbyService
     - AppMessaging
@@ -37,14 +37,14 @@ MonoBehaviour:
     - False
     - False
     - True
-    - True
-    - True
-    - True
-    - True
-    - True
-    - True
-    - True
     - False
+    - True
+    - True
+    - True
+    - True
+    - True
+    - True
+    - True
     - False
     - False
     - False
